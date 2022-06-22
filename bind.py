@@ -1,5 +1,6 @@
 import ray
 from ray import serve
+from ray.serve.drivers import DAGDriver
 
 
 @ray.remote
@@ -17,3 +18,5 @@ class MyModel:
 
 
 m = MyModel.bind([download.bind("Hello world")])
+dag = DAGDriver.bind(m)
+serve.run(dag)
